@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Script Hub",
+   Name = "Script Hub | 1.1",
    LoadingTitle = "Script Hub",
    LoadingSubtitle = "By Yoshi",
    ConfigurationSaving = {
@@ -44,8 +44,15 @@ local Tabs = {
     SkyWars = Window:CreateTab("SkyWars", 4483362458),
     STK = Window:CreateTab("STK", 4483362458),
     Universal = Window:CreateTab("Universal", 4483362458),
+    ChangeLog = Window:CreateTab("Change Log", 4483362458),
     Settings = Window:CreateTab("Settings", 4483362458)
 }
+
+--- 0. Change Log ---
+Tabs.ChangeLog:CreateParagraph({
+    Title = "Update Log", 
+    Content = "Script Version: 1.1\n--------------------------\nAdded:\n[+] Bang Gui\n[+] Fling Gui\n[+] Auto Execute\n[+] Project Snare [ MM2, Keyless ]"
+})
 
 --- 1. MVSD ---
 Tabs.MVSD:CreateSection("Murderers vs Sheriffs DUELS")
@@ -112,9 +119,9 @@ Tabs.FTAP:CreateDropdown({
 Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_FTAP) end})
 Tabs.FTAP:CreateDropdown({
    Name = "Keyless",
-   Options = {"Srv9"},
+   Options = {"Srv9 [NOT WORKING]"},
    Flag = "K_FTAP",
-   Callback = function(Option) _G.C_K_FTAP = (Option[1] == "Srv9") and [[script_key="cOSJGNkVTJrtDMwMroMZjwgWvJoXwEom"; loadstring(game:HttpGet("https://srv9.xyz/scripts/loader"))()]] end,
+   Callback = function(Option) _G.C_K_FTAP = (Option[1] == "Srv9 [NOT WORKING]") and [[script_key="cOSJGNkVTJrtDMwMroMZjwgWvJoXwEom"; loadstring(game:HttpGet("https://srv9.xyz/scripts/loader"))()]] end,
 })
 Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_FTAP) end})
 
@@ -165,14 +172,8 @@ Tabs.MVS:CreateButton({Name = "Inject Script", Callback = function() end})
 
 --- 7. SkyWars ---
 Tabs.SkyWars:CreateSection("SkyWars")
-Tabs.SkyWars:CreateDropdown({
-    Name = "No Keyless", 
-    Options = {"Soon..."}, 
-    Flag = "NK_Sky", 
-    Callback = function() end
-})
+Tabs.SkyWars:CreateDropdown({Name = "No Keyless", Options = {"Soon..."}, Flag = "NK_Sky", Callback = function() end})
 Tabs.SkyWars:CreateButton({Name = "Inject Script", Callback = function() end})
-
 Tabs.SkyWars:CreateDropdown({
    Name = "Keyless",
    Options = {"Vape v4"},
@@ -198,7 +199,6 @@ Tabs.STK:CreateDropdown({
    end,
 })
 Tabs.STK:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_STK) end})
-
 Tabs.STK:CreateDropdown({
    Name = "Keyless",
    Options = {"Soon..."},
@@ -240,7 +240,22 @@ Tabs.Universal:CreateDropdown({
 })
 Tabs.Universal:CreateButton({Name = "Script Inject", Callback = function() Execute(_G.C_Fling) end})
 
---- 10. Settings ---
+Tabs.Universal:CreateSection("Bang")
+Tabs.Universal:CreateDropdown({
+   Name = "Bang Gui",
+   Options = {"Bang Gui 1", "Bang Gui 2"},
+   Flag = "Bang_Drop",
+   Callback = function(Option)
+       local scripts = {
+           ["Bang Gui 1"] = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/4gh9/Bang-Script-Gui/main/bang%20gui.lua'))()]],
+           ["Bang Gui 2"] = [[loadstring(game:HttpGet("https://pastebin.com/raw/SvVYqTh6"))()]]
+       }
+       _G.C_Bang = scripts[Option[1]]
+   end,
+})
+Tabs.Universal:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_Bang) end})
+
+--- 11. Settings ---
 Tabs.Settings:CreateSection("Script Settings")
 Tabs.Settings:CreateToggle({
    Name = "Auto Execute",
@@ -250,12 +265,9 @@ Tabs.Settings:CreateToggle({
 })
 Tabs.Settings:CreateButton({Name = "Destroy UI", Callback = function() Rayfield:Destroy() end})
 
--- Логика Auto Execute
 task.spawn(function()
     task.wait(2)
-    if _G.AutoExecuteEnabled then
-        Execute(_G.C_Uni)
-    end
+    if _G.AutoExecuteEnabled then Execute(_G.C_Uni) end
 end)
 
-Rayfield:Notify({Title = "Authorized", Content = "Welcome to Script Hub", Duration = 5})
+Rayfield:Notify({Title = "Authorized", Content = "Script Hub | 1.1 Loaded", Duration = 5})
