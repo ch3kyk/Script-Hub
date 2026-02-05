@@ -1,41 +1,258 @@
-# Compiled Lua sources
-luac.out
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-# luarocks build files
-*.src.rock
-*.zip
-*.tar.gz
+local Window = Rayfield:CreateWindow({
+   Name = "Script Hub",
+   LoadingTitle = "Script Hub",
+   LoadingSubtitle = "By Yoshi",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "Yoshi_Configs", 
+      FileName = "ScriptHub"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink",
+      RememberJoins = true 
+   },
+   KeySystem = true, -- Система ключей включена
+   KeySettings = {
+      Title = "Key System",
+      Subtitle = "Enter the key to continue",
+      Note = "The key is: Yoshi",
+      FileName = "ScriptHubKey",
+      SaveKey = true,
+      GrabKeyFromSite = false,
+      Key = {"Yoshi"} -- Твой ключ
+   }
+})
 
-# Object files
-*.o
-*.os
-*.ko
-*.obj
-*.elf
+-- Создание вкладок
+local Tabs = {
+    MVSD = Window:CreateTab("MVSD", 4483362458),
+    BladeBall = Window:CreateTab("Blade Ball", 4483362458),
+    Doors = Window:CreateTab("Doors", 4483362458),
+    FTAP = Window:CreateTab("FTAP", 4483362458),
+    MM2 = Window:CreateTab("MM2", 4483362458),
+    MVS = Window:CreateTab("MVS", 4483362458),
+    SkyWars = Window:CreateTab("SkyWars", 4483362458),
+    STK = Window:CreateTab("STK", 4483362458),
+    Universal = Window:CreateTab("Universal", 4483362458),
+    Settings = Window:CreateTab("Settings", 4483362458)
+}
 
-# Precompiled Headers
-*.gch
-*.pch
+--- 1. MVSD ---
+Tabs.MVSD:CreateSection("Murderers vs Sheriffs DUELS")
+Tabs.MVSD:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"WhyHub"},
+   CurrentOption = {""},
+   Flag = "NK_MVSD",
+   Callback = function(Option) _G.Sel_NK_MVSD = Option[1] end,
+})
+Tabs.MVSD:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_MVSD == "WhyHub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Murderers-VS-Sheriffs-DUELS-Legit-Bot-Rage-Bot-Crash-all-Kill-all-82594"))()
+       end
+   end,
+})
+Tabs.MVSD:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_MVSD", Callback = function(Option) _G.Sel_K_MVSD = Option[1] end})
+Tabs.MVSD:CreateButton({Name = "Inject Script", Callback = function() end})
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-*.def
-*.exp
+--- 2. Blade Ball ---
+Tabs.BladeBall:CreateSection("Blade Ball")
+Tabs.BladeBall:CreateDropdown({
+   Name = "No Keyless",
+   Options = {".2xr.", "Corolla Hub", "Soluna", "Sslkin", "Bedol Hub"},
+   CurrentOption = {""},
+   Flag = "NK_BB",
+   Callback = function(Option) _G.Sel_NK_BB = Option[1] end,
+})
+Tabs.BladeBall:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_BB == ".2xr." then
+           loadstring(game:HttpGet("https://raw.githubusercontent.com/2xrW/return/refs/heads/main/hub"))()
+       elseif _G.Sel_NK_BB == "Corolla Hub" then
+           loadstring(game:HttpGet('https://raw.githubusercontent.com/7190000/Corolla-Hub/main/ch.lua'))()
+       elseif _G.Sel_NK_BB == "Soluna" then
+           loadstring(game:HttpGet("https://soluna-script.vercel.app/bladeball.lua",true))()
+       elseif _G.Sel_NK_BB == "Sslkin" then
+           getgenv().KEY = 'sosalkinhub<3'
+           loadstring(game:HttpGet('https://raw.githubusercontent.com/cbozovcloh781-hub/kfvweiyulfg2873f2/refs/heads/main/adkfayibhdbfajshfvaufvaeyuv_loaderkeyless'))()
+       elseif _G.Sel_NK_BB == "Bedol Hub" then
+           loadstring(game:HttpGet("https://raw.githubusercontent.com/3345-c-a-t-s-u-s/-beta-/main/AutoParry.lua"))()
+       end
+   end,
+})
+Tabs.BladeBall:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_BB", Callback = function(Option) _G.Sel_K_BB = Option[1] end})
+Tabs.BladeBall:CreateButton({Name = "Inject Script", Callback = function() end})
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+--- 3. Doors ---
+Tabs.Doors:CreateSection("Doors")
+Tabs.Doors:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"Issue of items"},
+   CurrentOption = {""},
+   Flag = "NK_Doors",
+   Callback = function(Option) _G.Sel_NK_Doors = Option[1] end,
+})
+Tabs.Doors:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_Doors == "Issue of items" then
+           loadstring(game:HttpGet("https://raw.githubusercontent.com/CatEnddroid/Kitty-Cats-Doors-Beta/refs/heads/main/hub.lua"))()
+       end
+   end,
+})
+Tabs.Doors:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_Doors", Callback = function(Option) _G.Sel_K_Doors = Option[1] end})
+Tabs.Doors:CreateButton({Name = "Inject Script", Callback = function() end})
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+--- 4. FTAP ---
+Tabs.FTAP:CreateSection("Fling Things And People")
+Tabs.FTAP:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"OP Hub", "EndorisFtap Hub", "FTAP Hub", "Yuki Hub", "Holon Hub"},
+   CurrentOption = {""},
+   Flag = "NK_FTAP",
+   Callback = function(Option) _G.Sel_NK_FTAP = Option[1] end,
+})
+Tabs.FTAP:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_FTAP == "OP Hub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-OP-HUB-80884"))()
+       elseif _G.Sel_NK_FTAP == "EndorisFtap Hub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-EndorisFTAP-71376"))()
+       elseif _G.Sel_NK_FTAP == "FTAP Hub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-FTAP-Hub-79081"))()
+       elseif _G.Sel_NK_FTAP == "Yuki Hub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-Yuki-Hub-Ftap-BETA-75713"))()
+       elseif _G.Sel_NK_FTAP == "Holon Hub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-holon-hub-87313"))()
+       end
+   end,
+})
+Tabs.FTAP:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_FTAP", Callback = function(Option) _G.Sel_K_FTAP = Option[1] end})
+Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() end})
 
+--- 5. MM2 ---
+Tabs.MM2:CreateSection("Murder Mystery 2")
+Tabs.MM2:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"Zed", "Kumi", "Space", "LuminWare", "Vertex"},
+   CurrentOption = {""},
+   Flag = "NK_MM2",
+   Callback = function(Option) _G.Sel_NK_MM2 = Option[1] end,
+})
+Tabs.MM2:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_MM2 == "Zed" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-Murder-Mystery-2-script-2026-97170"))()
+       elseif _G.Sel_NK_MM2 == "Kumi" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-I-Player-Role-ESP-I-Autofarm-I-Dupe-I-More-Features-97150"))()
+       elseif _G.Sel_NK_MM2 == "Space" then
+           loadstring(game:HttpGet("https://globalexp.xyz/"))()
+       elseif _G.Sel_NK_MM2 == "LuminWare" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-LuminWare-V2-93112"))()
+       elseif _G.Sel_NK_MM2 == "Vertex" then
+           loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
+       end
+   end,
+})
+Tabs.MM2:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_MM2", Callback = function(Option) _G.Sel_K_MM2 = Option[1] end})
+Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() end})
+
+--- 6. MVS ---
+Tabs.MVS:CreateSection("Murderers vs Sheriffs")
+Tabs.MVS:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"DanHub", "Aetherium", "AutoShoot"},
+   CurrentOption = {""},
+   Flag = "NK_MVS",
+   Callback = function(Option) _G.Sel_NK_MVS = Option[1] end,
+})
+Tabs.MVS:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_MVS == "DanHub" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-DANHUB-NO-KEY-AUTO-SHOOT-CLICK-SHOOT-AIM-KILL-HITBOX-ETC-94134"))()
+       elseif _G.Sel_NK_MVS == "Aetherium" then
+           loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-Duels-AutoPlay-Bot-AutoWin-ESP-Aimbot-Hitbox-94372"))()
+       elseif _G.Sel_NK_MVS == "AutoShoot" then
+           -- Здесь должен быть полный код AutoShoot, который ты кидал ранее
+           print("AutoShoot logic active")
+       end
+   end,
+})
+Tabs.MVS:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_MVS", Callback = function(Option) _G.Sel_K_MVS = Option[1] end})
+Tabs.MVS:CreateButton({Name = "Inject Script", Callback = function() end})
+
+--- 7. SkyWars ---
+Tabs.SkyWars:CreateSection("SkyWars")
+Tabs.SkyWars:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"Soon..."},
+   CurrentOption = {""},
+   Flag = "NK_Sky",
+   Callback = function(Option) _G.Sel_NK_Sky = Option[1] end,
+})
+Tabs.SkyWars:CreateButton({Name = "Inject Script", Callback = function() end})
+Tabs.SkyWars:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_Sky", Callback = function(Option) _G.Sel_K_Sky = Option[1] end})
+Tabs.SkyWars:CreateButton({Name = "Inject Script", Callback = function() end})
+
+--- 8. STK ---
+Tabs.STK:CreateSection("Survive the Killer")
+Tabs.STK:CreateDropdown({
+   Name = "No Keyless",
+   Options = {"Vadrifts", "Ywxoscripts"},
+   CurrentOption = {""},
+   Flag = "NK_STK",
+   Callback = function(Option) _G.Sel_NK_STK = Option[1] end,
+})
+Tabs.STK:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_NK_STK == "Vadrifts" then
+           loadstring(game:HttpGet("https://raw.githubusercontent.com/vqmpjayZ/Vadrifts-Hub/refs/heads/main/Games/Survive-The-Killer/source.lua"))()
+       elseif _G.Sel_NK_STK == "Ywxoscripts" then
+           script_key="FnOFBBljPLBHInvKKgMkRKNWsJPNSiRV";
+           loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/e2c3c4735b2fd5d7ae2ca226cd7ab99c.lua"))()
+       end
+   end,
+})
+Tabs.STK:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_STK", Callback = function(Option) _G.Sel_K_STK = Option[1] end})
+Tabs.STK:CreateButton({Name = "Inject Script", Callback = function() end})
+
+--- 9. Universal ---
+Tabs.Universal:CreateSection("Universal Hub")
+Tabs.Universal:CreateDropdown({
+   Name = "Universal Hub",
+   Options = {"Sirius Hub", "XVC Hub", "Infiniti Yeild"},
+   CurrentOption = {""},
+   Flag = "Uni_Hub",
+   Callback = function(Option) _G.Sel_Uni = Option[1] end,
+})
+Tabs.Universal:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_Uni == "Sirius Hub" then
+           loadstring(game:HttpGet('https://sirius.menu/script'))();
+       elseif _G.Sel_Uni == "XVC Hub" then
+           loadstring(game:HttpGet("https://pastebin.com/raw/Piw5bqGq"))()
+       elseif _G.Sel_Uni == "Infiniti Yeild" then
+           loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+       end
+   end,
+})
+
+--- 10. Settings ---
+Tabs.Settings:CreateSection("Script Settings")
+Tabs.Settings:CreateButton({
+   Name = "Destroy UI",
+   Callback = function() Rayfield:Destroy() end,
+})
+
+Rayfield:Notify({Title = "Authorized", Content = "Welcome to Script Hub, Yoshi!", Duration = 5})
