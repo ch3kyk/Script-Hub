@@ -21,6 +21,18 @@ local Window = Rayfield:CreateWindow({
    }
 })
 
+-- Глобальная функция исполнения
+local function Execute(code)
+    if code and code ~= "" then
+        local success, err = pcall(function()
+            loadstring(code)()
+        end)
+        if not success then
+            Rayfield:Notify({Title = "Error", Content = "Failed to execute script", Duration = 3})
+        end
+    end
+end
+
 -- Создание вкладок
 local Tabs = {
     MVSD = Window:CreateTab("MVSD", 4483362458),
@@ -40,19 +52,11 @@ Tabs.MVSD:CreateSection("Murderers vs Sheriffs DUELS")
 Tabs.MVSD:CreateDropdown({
    Name = "No Keyless",
    Options = {"WhyHub"},
-   CurrentOption = {""},
    Flag = "NK_MVSD",
-   Callback = function(Option) _G.Sel_NK_MVSD = Option[1] end,
+   Callback = function(Option) _G.C_NK_MVSD = (Option[1] == "WhyHub") and [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murderers-VS-Sheriffs-DUELS-Legit-Bot-Rage-Bot-Crash-all-Kill-all-82594"))()]] end,
 })
-Tabs.MVSD:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_MVSD == "WhyHub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Murderers-VS-Sheriffs-DUELS-Legit-Bot-Rage-Bot-Crash-all-Kill-all-82594"))()
-       end
-   end,
-})
-Tabs.MVSD:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_MVSD", Callback = function(Option) _G.Sel_K_MVSD = Option[1] end})
+Tabs.MVSD:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_MVSD) end})
+Tabs.MVSD:CreateDropdown({Name = "Keyless", Options = {}, Flag = "K_MVSD", Callback = function() end})
 Tabs.MVSD:CreateButton({Name = "Inject Script", Callback = function() end})
 
 --- 2. Blade Ball ---
@@ -60,28 +64,20 @@ Tabs.BladeBall:CreateSection("Blade Ball")
 Tabs.BladeBall:CreateDropdown({
    Name = "No Keyless",
    Options = {".2xr.", "Corolla Hub", "Soluna", "Sslkin", "Bedol Hub"},
-   CurrentOption = {""},
    Flag = "NK_BB",
-   Callback = function(Option) _G.Sel_NK_BB = Option[1] end,
-})
-Tabs.BladeBall:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_BB == ".2xr." then
-           loadstring(game:HttpGet("https://raw.githubusercontent.com/2xrW/return/refs/heads/main/hub"))()
-       elseif _G.Sel_NK_BB == "Corolla Hub" then
-           loadstring(game:HttpGet('https://raw.githubusercontent.com/7190000/Corolla-Hub/main/ch.lua'))()
-       elseif _G.Sel_NK_BB == "Soluna" then
-           loadstring(game:HttpGet("https://soluna-script.vercel.app/bladeball.lua",true))()
-       elseif _G.Sel_NK_BB == "Sslkin" then
-           getgenv().KEY = 'sosalkinhub<3'
-           loadstring(game:HttpGet('https://raw.githubusercontent.com/cbozovcloh781-hub/kfvweiyulfg2873f2/refs/heads/main/adkfayibhdbfajshfvaufvaeyuv_loaderkeyless'))()
-       elseif _G.Sel_NK_BB == "Bedol Hub" then
-           loadstring(game:HttpGet("https://raw.githubusercontent.com/3345-c-a-t-s-u-s/-beta-/main/AutoParry.lua"))()
-       end
+   Callback = function(Option)
+       local scripts = {
+           [".2xr."] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/2xrW/return/refs/heads/main/hub"))()]],
+           ["Corolla Hub"] = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/7190000/Corolla-Hub/main/ch.lua'))()]],
+           ["Soluna"] = [[loadstring(game:HttpGet("https://soluna-script.vercel.app/bladeball.lua",true))()]],
+           ["Sslkin"] = [[getgenv().KEY = 'sosalkinhub<3'; loadstring(game:HttpGet('https://raw.githubusercontent.com/cbozovcloh781-hub/kfvweiyulfg2873f2/refs/heads/main/adkfayibhdbfajshfvaufvaeyuv_loaderkeyless'))()]],
+           ["Bedol Hub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/3345-c-a-t-s-u-s/-beta-/main/AutoParry.lua"))()]]
+       }
+       _G.C_NK_BB = scripts[Option[1]]
    end,
 })
-Tabs.BladeBall:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_BB", Callback = function(Option) _G.Sel_K_BB = Option[1] end})
+Tabs.BladeBall:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_BB) end})
+Tabs.BladeBall:CreateDropdown({Name = "Keyless", Options = {}, Flag = "K_BB", Callback = function() end})
 Tabs.BladeBall:CreateButton({Name = "Inject Script", Callback = function() end})
 
 --- 3. Doors ---
@@ -89,19 +85,11 @@ Tabs.Doors:CreateSection("Doors")
 Tabs.Doors:CreateDropdown({
    Name = "No Keyless",
    Options = {"Issue of items"},
-   CurrentOption = {""},
    Flag = "NK_Doors",
-   Callback = function(Option) _G.Sel_NK_Doors = Option[1] end,
+   Callback = function(Option) _G.C_NK_Doors = (Option[1] == "Issue of items") and [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CatEnddroid/Kitty-Cats-Doors-Beta/refs/heads/main/hub.lua"))()]] end,
 })
-Tabs.Doors:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_Doors == "Issue of items" then
-           loadstring(game:HttpGet("https://raw.githubusercontent.com/CatEnddroid/Kitty-Cats-Doors-Beta/refs/heads/main/hub.lua"))()
-       end
-   end,
-})
-Tabs.Doors:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_Doors", Callback = function(Option) _G.Sel_K_Doors = Option[1] end})
+Tabs.Doors:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_Doors) end})
+Tabs.Doors:CreateDropdown({Name = "Keyless", Options = {}, Flag = "K_Doors", Callback = function() end})
 Tabs.Doors:CreateButton({Name = "Inject Script", Callback = function() end})
 
 --- 4. FTAP ---
@@ -109,164 +97,165 @@ Tabs.FTAP:CreateSection("Fling Things And People")
 Tabs.FTAP:CreateDropdown({
    Name = "No Keyless",
    Options = {"OP Hub", "EndorisFtap Hub", "FTAP Hub", "Yuki Hub", "Holon Hub"},
-   CurrentOption = {""},
    Flag = "NK_FTAP",
-   Callback = function(Option) _G.Sel_NK_FTAP = Option[1] end,
-})
-Tabs.FTAP:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_FTAP == "OP Hub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-OP-HUB-80884"))()
-       elseif _G.Sel_NK_FTAP == "EndorisFtap Hub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-EndorisFTAP-71376"))()
-       elseif _G.Sel_NK_FTAP == "FTAP Hub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-FTAP-Hub-79081"))()
-       elseif _G.Sel_NK_FTAP == "Yuki Hub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-Yuki-Hub-Ftap-BETA-75713"))()
-       elseif _G.Sel_NK_FTAP == "Holon Hub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-holon-hub-87313"))()
-       end
+   Callback = function(Option)
+       local scripts = {
+           ["OP Hub"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-OP-HUB-80884"))()]],
+           ["EndorisFtap Hub"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-EndorisFTAP-71376"))()]],
+           ["FTAP Hub"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-FTAP-Hub-79081"))()]],
+           ["Yuki Hub"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-Yuki-Hub-Ftap-BETA-75713"))()]],
+           ["Holon Hub"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Fling-Things-and-People-holon-hub-87313"))()]]
+       }
+       _G.C_NK_FTAP = scripts[Option[1]]
    end,
 })
-Tabs.FTAP:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_FTAP", Callback = function(Option) _G.Sel_K_FTAP = Option[1] end})
-Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() end})
+Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_FTAP) end})
+Tabs.FTAP:CreateDropdown({
+   Name = "Keyless",
+   Options = {"Srv9"},
+   Flag = "K_FTAP",
+   Callback = function(Option) _G.C_K_FTAP = (Option[1] == "Srv9") and [[script_key="cOSJGNkVTJrtDMwMroMZjwgWvJoXwEom"; loadstring(game:HttpGet("https://srv9.xyz/scripts/loader"))()]] end,
+})
+Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_FTAP) end})
 
 --- 5. MM2 ---
 Tabs.MM2:CreateSection("Murder Mystery 2")
 Tabs.MM2:CreateDropdown({
    Name = "No Keyless",
    Options = {"Zed", "Kumi", "Space", "LuminWare", "Vertex"},
-   CurrentOption = {""},
    Flag = "NK_MM2",
-   Callback = function(Option) _G.Sel_NK_MM2 = Option[1] end,
-})
-Tabs.MM2:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_MM2 == "Zed" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-Murder-Mystery-2-script-2026-97170"))()
-       elseif _G.Sel_NK_MM2 == "Kumi" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-I-Player-Role-ESP-I-Autofarm-I-Dupe-I-More-Features-97150"))()
-       elseif _G.Sel_NK_MM2 == "Space" then
-           loadstring(game:HttpGet("https://globalexp.xyz/"))()
-       elseif _G.Sel_NK_MM2 == "LuminWare" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-LuminWare-V2-93112"))()
-       elseif _G.Sel_NK_MM2 == "Vertex" then
-           loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()
-       end
+   Callback = function(Option)
+       local scripts = {
+           ["Zed"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-Murder-Mystery-2-script-2026-97170"))()]],
+           ["Kumi"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-I-Player-Role-ESP-I-Autofarm-I-Dupe-I-More-Features-97150"))()]],
+           ["Space"] = [[loadstring(game:HttpGet("https://globalexp.xyz/"))()]],
+           ["LuminWare"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-LuminWare-V2-93112"))()]],
+           ["Vertex"] = [[loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()]]
+       }
+       _G.C_NK_MM2 = scripts[Option[1]]
    end,
 })
+Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_MM2) end})
 Tabs.MM2:CreateDropdown({
    Name = "Keyless",
    Options = {"Project Snare"},
-   CurrentOption = {""},
    Flag = "K_MM2",
-   Callback = function(Option) _G.Sel_K_MM2 = Option[1] end,
+   Callback = function(Option) _G.C_K_MM2 = (Option[1] == "Project Snare") and [[loadstring(game:HttpGet("https://scripts.projectsnare.online/SnareMM2", true))()]] end,
 })
-Tabs.MM2:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_K_MM2 == "Project Snare" then
-           loadstring(game:HttpGet("https://scripts.projectsnare.online/SnareMM2", true))()
-       end
-   end,
-})
+Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_MM2) end})
 
 --- 6. MVS ---
 Tabs.MVS:CreateSection("Murderers vs Sheriffs")
 Tabs.MVS:CreateDropdown({
    Name = "No Keyless",
    Options = {"DanHub", "Aetherium", "AutoShoot"},
-   CurrentOption = {""},
    Flag = "NK_MVS",
-   Callback = function(Option) _G.Sel_NK_MVS = Option[1] end,
-})
-Tabs.MVS:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_MVS == "DanHub" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-DANHUB-NO-KEY-AUTO-SHOOT-CLICK-SHOOT-AIM-KILL-HITBOX-ETC-94134"))()
-       elseif _G.Sel_NK_MVS == "Aetherium" then
-           loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-Duels-AutoPlay-Bot-AutoWin-ESP-Aimbot-Hitbox-94372"))()
-       elseif _G.Sel_NK_MVS == "AutoShoot" then
-           -- Здесь вставляется логика AutoShoot (локальная функция или loadstring)
-           print("Injecting AutoShoot logic...")
-       end
+   Callback = function(Option)
+       local scripts = {
+           ["DanHub"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-DANHUB-NO-KEY-AUTO-SHOOT-CLICK-SHOOT-AIM-KILL-HITBOX-ETC-94134"))()]],
+           ["Aetherium"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-Duels-AutoPlay-Bot-AutoWin-ESP-Aimbot-Hitbox-94372"))()]],
+           ["AutoShoot"] = "AUTOSHOOT_LOCAL_CODE"
+       }
+       _G.C_NK_MVS = scripts[Option[1]]
    end,
 })
-Tabs.MVS:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_MVS", Callback = function(Option) _G.Sel_K_MVS = Option[1] end})
+Tabs.MVS:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_MVS) end})
+Tabs.MVS:CreateDropdown({Name = "Keyless", Options = {}, Flag = "K_MVS", Callback = function() end})
 Tabs.MVS:CreateButton({Name = "Inject Script", Callback = function() end})
 
 --- 7. SkyWars ---
 Tabs.SkyWars:CreateSection("SkyWars")
 Tabs.SkyWars:CreateDropdown({
-   Name = "No Keyless",
-   Options = {"Soon..."},
-   CurrentOption = {""},
-   Flag = "NK_Sky",
-   Callback = function(Option) _G.Sel_NK_Sky = Option[1] end,
+    Name = "No Keyless", 
+    Options = {"Soon..."}, 
+    Flag = "NK_Sky", 
+    Callback = function() end
 })
 Tabs.SkyWars:CreateButton({Name = "Inject Script", Callback = function() end})
-Tabs.SkyWars:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_Sky", Callback = function(Option) _G.Sel_K_Sky = Option[1] end})
-Tabs.SkyWars:CreateButton({Name = "Inject Script", Callback = function() end})
+
+Tabs.SkyWars:CreateDropdown({
+   Name = "Keyless",
+   Options = {"Vape v4"},
+   Flag = "K_Sky",
+   Callback = function(Option)
+       _G.C_K_Sky = (Option[1] == "Vape v4") and [[loadstring(game:HttpGet("https://rawscripts.net/raw/SKYWARS-Vape-v4-43277"))()]] or ""
+   end,
+})
+Tabs.SkyWars:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_Sky) end})
 
 --- 8. STK ---
 Tabs.STK:CreateSection("Survive the Killer")
 Tabs.STK:CreateDropdown({
    Name = "No Keyless",
    Options = {"Vadrifts", "Ywxoscripts"},
-   CurrentOption = {""},
    Flag = "NK_STK",
-   Callback = function(Option) _G.Sel_NK_STK = Option[1] end,
-})
-Tabs.STK:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_NK_STK == "Vadrifts" then
-           loadstring(game:HttpGet("https://raw.githubusercontent.com/vqmpjayZ/Vadrifts-Hub/refs/heads/main/Games/Survive-The-Killer/source.lua"))()
-       elseif _G.Sel_NK_STK == "Ywxoscripts" then
-           script_key="FnOFBBljPLBHInvKKgMkRKNWsJPNSiRV";
-           loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/e2c3c4735b2fd5d7ae2ca226cd7ab99c.lua"))()
+   Callback = function(Option)
+       if Option[1] == "Vadrifts" then
+           _G.C_NK_STK = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/vqmpjayZ/Vadrifts-Hub/refs/heads/main/Games/Survive-The-Killer/source.lua"))()]]
+       elseif Option[1] == "Ywxoscripts" then
+           _G.C_NK_STK = [[script_key="FnOFBBljPLBHInvKKgMkRKNWsJPNSiRV"; loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/e2c3c4735b2fd5d7ae2ca226cd7ab99c.lua"))()]]
        end
    end,
 })
-Tabs.STK:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_STK", Callback = function(Option) _G.Sel_K_STK = Option[1] end})
-Tabs.STK:CreateButton({Name = "Inject Script", Callback = function() end})
+Tabs.STK:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_STK) end})
+
+Tabs.STK:CreateDropdown({
+   Name = "Keyless",
+   Options = {"Soon..."},
+   Flag = "K_STK",
+   Callback = function(Option) _G.C_K_STK = "" end,
+})
+Tabs.STK:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_STK) end})
 
 --- 9. Universal ---
 Tabs.Universal:CreateSection("Universal Hub")
 Tabs.Universal:CreateDropdown({
    Name = "Universal Hub",
    Options = {"Sirius Hub", "XVC Hub", "Infiniti Yeild"},
-   CurrentOption = {""},
    Flag = "Uni_Hub",
-   Callback = function(Option) _G.Sel_Uni = Option[1] end,
-})
-Tabs.Universal:CreateButton({
-   Name = "Inject Script",
-   Callback = function()
-       if _G.Sel_Uni == "Sirius Hub" then
-           loadstring(game:HttpGet('https://sirius.menu/script'))();
-       elseif _G.Sel_Uni == "XVC Hub" then
-           loadstring(game:HttpGet("https://pastebin.com/raw/Piw5bqGq"))()
-       elseif _G.Sel_Uni == "Infiniti Yeild" then
-           loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
-       end
+   Callback = function(Option)
+       local scripts = {
+           ["Sirius Hub"] = [[loadstring(game:HttpGet('https://sirius.menu/script'))();]],
+           ["XVC Hub"] = [[loadstring(game:HttpGet("https://pastebin.com/raw/Piw5bqGq"))()]],
+           ["Infiniti Yeild"] = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()]]
+       }
+       _G.C_Uni = scripts[Option[1]]
    end,
 })
+Tabs.Universal:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_Uni) end})
+
+Tabs.Universal:CreateSection("Fling")
+Tabs.Universal:CreateDropdown({
+   Name = "Fling Gui",
+   Options = {"Fling Gui 1", "Fling Gui 2", "Fling Gui 3"},
+   Flag = "Fling_Drop",
+   Callback = function(Option)
+       local scripts = {
+           ["Fling Gui 1"] = [[loadstring((function(t)local s=''for i=1,#t,2 do s=s..string.char(t[i]//t[i+1])end return s end)({216,2,333,3,485,5,700,7,1265,11,1508,13,1938,17,1995,19,2530,23,2987,29,80,2,309,3,485,5,763,7,1111,11,754,13,1224,17,2204,19,2668,23,3248,29,142,2,303,3,580,5,280,7,374,11,1352,13,1972,17,2204,19,2576,23,3335,29,116,2,141,3,235,5,721,7,1188,11,1443,13,1972,17,874,19,2415,23,3219,29,94,2,345,3,550,5,735,7,1232,11,1456,13,1717,17,2204,19,2645,23,1363,29,208,2,168,3,270,5,721,7,1210,11,1495,13,1700,17,1957,19,2691,23,2900,29,94,2,342,3,485,5,833,7,517,11,910,13,1836,17,1995,19,2530,23,2987,29,142,2,351,3,525,5,322,7,1188,11,1521,13,1649,17,646,19,943,23,1189,29,80,2,123,3}))()]],
+           ["Fling Gui 2"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/joshclark756/joshclark756-s-scripts/refs/heads/main/fling%20player%20gui%20(unanchored%20parts).lua"))()]],
+           ["Fling Gui 3"] = [[loadstring(game:HttpGet("https://rscripts.net/raw/fe-flinger-gui-works-anywhere_1756291955889_SwfaGHMWsT.txt",true))()]]
+       }
+       _G.C_Fling = scripts[Option[1]]
+   end,
+})
+Tabs.Universal:CreateButton({Name = "Script Inject", Callback = function() Execute(_G.C_Fling) end})
 
 --- 10. Settings ---
 Tabs.Settings:CreateSection("Script Settings")
 Tabs.Settings:CreateToggle({
    Name = "Auto Execute",
    CurrentValue = false,
-   Flag = "AutoExec_Toggle",
+   Flag = "AutoExecute_Toggle",
    Callback = function(Value) _G.AutoExecuteEnabled = Value end,
 })
-Tabs.Settings:CreateButton({
-   Name = "Destroy UI",
-   Callback = function() Rayfield:Destroy() end,
-})
+Tabs.Settings:CreateButton({Name = "Destroy UI", Callback = function() Rayfield:Destroy() end})
 
-Rayfield:Notify({Title = "Script Hub", Content = "Full Load Complete. Welcome Yoshi!", Duration = 5})
+-- Логика Auto Execute
+task.spawn(function()
+    task.wait(2)
+    if _G.AutoExecuteEnabled then
+        Execute(_G.C_Uni)
+    end
+end)
+
+Rayfield:Notify({Title = "Authorized", Content = "Welcome to Script Hub", Duration = 5})
