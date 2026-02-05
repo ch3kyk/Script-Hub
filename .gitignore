@@ -1,7 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Script Hub | 1.1",
+   Name = "Script Hub | 1.2",
    LoadingTitle = "Script Hub",
    LoadingSubtitle = "By Yoshi",
    ConfigurationSaving = {
@@ -25,7 +25,8 @@ local Window = Rayfield:CreateWindow({
 local function Execute(code)
     if code and code ~= "" then
         local success, err = pcall(function()
-            loadstring(code)()
+            local func, err = loadstring(code)
+            if func then func() else warn(err) end
         end)
         if not success then
             Rayfield:Notify({Title = "Error", Content = "Failed to execute script", Duration = 3})
@@ -50,8 +51,8 @@ local Tabs = {
 
 --- 0. Change Log ---
 Tabs.ChangeLog:CreateParagraph({
-    Title = "Update Log", 
-    Content = "Script Version: 1.1\n--------------------------\nAdded:\n[+] Bang Gui\n[+] Fling Gui\n[+] Auto Execute\n[+] Project Snare [ MM2, Keyless ]"
+    Title = "Update Logs", 
+    Content = "Script Version: 1.2\n--------------------------\nAdded:\n[+] Ronix [ Blade Ball ]\n[+] Project Stark [ Blade Ball ]"
 })
 
 --- 1. MVSD ---
@@ -84,8 +85,19 @@ Tabs.BladeBall:CreateDropdown({
    end,
 })
 Tabs.BladeBall:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_BB) end})
-Tabs.BladeBall:CreateDropdown({Name = "Keyless", Options = {}, Flag = "K_BB", Callback = function() end})
-Tabs.BladeBall:CreateButton({Name = "Inject Script", Callback = function() end})
+Tabs.BladeBall:CreateDropdown({
+   Name = "Keyless",
+   Options = {"Ronix", "Project Stark"},
+   Flag = "K_BB",
+   Callback = function(Option)
+       local scripts = {
+           ["Ronix"] = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/fda9babd071d6b536a745774b6bc681c.lua"))()]],
+           ["Project Stark"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Blade-Ball-Project-Stark-Free-Hub-59919"))()]]
+       }
+       _G.C_K_BB = scripts[Option[1]]
+   end,
+})
+Tabs.BladeBall:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_BB) end})
 
 --- 3. Doors ---
 Tabs.Doors:CreateSection("Doors")
@@ -119,9 +131,16 @@ Tabs.FTAP:CreateDropdown({
 Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_FTAP) end})
 Tabs.FTAP:CreateDropdown({
    Name = "Keyless",
-   Options = {"Srv9 [NOT WORKING]"},
+   Options = {"Srv9 [NOT WORKING]", "Srv9 [WORKING]", "Blitz Hub"},
    Flag = "K_FTAP",
-   Callback = function(Option) _G.C_K_FTAP = (Option[1] == "Srv9 [NOT WORKING]") and [[script_key="cOSJGNkVTJrtDMwMroMZjwgWvJoXwEom"; loadstring(game:HttpGet("https://srv9.xyz/scripts/loader"))()]] end,
+   Callback = function(Option)
+       local scripts = {
+           ["Srv9 [NOT WORKING]"] = [[script_key="cOSJGNkVTJrtDMwMroMZjwgWvJoXwEom"; loadstring(game:HttpGet("https://srv9.xyz/scripts/loader"))()]],
+           ["Srv9 [WORKING]"] = [[script_key="your_key"; loadstring(game:HttpGet("https://srv9.xyz/scripts/loader"))()]],
+           ["Blitz Hub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/BlizTBr/scripts/refs/heads/main/FTAP.lua"))()]]
+       }
+       _G.C_K_FTAP = scripts[Option[1]]
+   end,
 })
 Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_FTAP) end})
 
@@ -270,4 +289,4 @@ task.spawn(function()
     if _G.AutoExecuteEnabled then Execute(_G.C_Uni) end
 end)
 
-Rayfield:Notify({Title = "Authorized", Content = "Script Hub | 1.1 Loaded", Duration = 5})
+Rayfield:Notify({Title = "Authorized", Content = "Script Hub | 1.2 Loaded", Duration = 5})
