@@ -9,12 +9,7 @@ local Window = Rayfield:CreateWindow({
       FolderName = "Yoshi_Configs", 
       FileName = "ScriptHub"
    },
-   Discord = {
-      Enabled = false,
-      Invite = "noinvitelink",
-      RememberJoins = true 
-   },
-   KeySystem = true, -- Система ключей включена
+   KeySystem = true,
    KeySettings = {
       Title = "Key System",
       Subtitle = "Enter the key to continue",
@@ -22,7 +17,7 @@ local Window = Rayfield:CreateWindow({
       FileName = "ScriptHubKey",
       SaveKey = true,
       GrabKeyFromSite = false,
-      Key = {"Yoshi"} -- Твой ключ
+      Key = {"Yoshi"}
    }
 })
 
@@ -162,8 +157,21 @@ Tabs.MM2:CreateButton({
        end
    end,
 })
-Tabs.MM2:CreateDropdown({Name = "Keyless", Options = {}, CurrentOption = {""}, Flag = "K_MM2", Callback = function(Option) _G.Sel_K_MM2 = Option[1] end})
-Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() end})
+Tabs.MM2:CreateDropdown({
+   Name = "Keyless",
+   Options = {"Project Snare"},
+   CurrentOption = {""},
+   Flag = "K_MM2",
+   Callback = function(Option) _G.Sel_K_MM2 = Option[1] end,
+})
+Tabs.MM2:CreateButton({
+   Name = "Inject Script",
+   Callback = function()
+       if _G.Sel_K_MM2 == "Project Snare" then
+           loadstring(game:HttpGet("https://scripts.projectsnare.online/SnareMM2", true))()
+       end
+   end,
+})
 
 --- 6. MVS ---
 Tabs.MVS:CreateSection("Murderers vs Sheriffs")
@@ -182,8 +190,8 @@ Tabs.MVS:CreateButton({
        elseif _G.Sel_NK_MVS == "Aetherium" then
            loadstring(game:HttpGet("https://rawscripts.net/raw/DUELS-Murderers-VS-Sheriffs-Duels-AutoPlay-Bot-AutoWin-ESP-Aimbot-Hitbox-94372"))()
        elseif _G.Sel_NK_MVS == "AutoShoot" then
-           -- Здесь должен быть полный код AutoShoot, который ты кидал ранее
-           print("AutoShoot logic active")
+           -- Здесь вставляется логика AutoShoot (локальная функция или loadstring)
+           print("Injecting AutoShoot logic...")
        end
    end,
 })
@@ -250,9 +258,15 @@ Tabs.Universal:CreateButton({
 
 --- 10. Settings ---
 Tabs.Settings:CreateSection("Script Settings")
+Tabs.Settings:CreateToggle({
+   Name = "Auto Execute",
+   CurrentValue = false,
+   Flag = "AutoExec_Toggle",
+   Callback = function(Value) _G.AutoExecuteEnabled = Value end,
+})
 Tabs.Settings:CreateButton({
    Name = "Destroy UI",
    Callback = function() Rayfield:Destroy() end,
 })
 
-Rayfield:Notify({Title = "Authorized", Content = "Welcome to Script Hub, Yoshi!", Duration = 5})
+Rayfield:Notify({Title = "Script Hub", Content = "Full Load Complete. Welcome Yoshi!", Duration = 5})
