@@ -52,7 +52,7 @@ local Tabs = {
 --- 0. Change Log ---
 Tabs.ChangeLog:CreateParagraph({
     Title = "Update Logs", 
-    Content = "Script Version: 1.2\n--------------------------\nAdded:\n[+] Ronix [ Blade Ball ]\n[+] Project Stark [ Blade Ball ]"
+    Content = "Script Version: 1.2\n--------------------------\nAdded:\n[+] MM2: Spark Hub (Keyless)\n[+] MM2: Praixe Hub (No Keyless)\n[+] MM2: By me (No Keyless)\n[+] Ronix [ Blade Ball ]\n[+] Project Stark [ Blade Ball ]"
 })
 
 --- 1. MVSD ---
@@ -148,7 +148,7 @@ Tabs.FTAP:CreateButton({Name = "Inject Script", Callback = function() Execute(_G
 Tabs.MM2:CreateSection("Murder Mystery 2")
 Tabs.MM2:CreateDropdown({
    Name = "No Keyless",
-   Options = {"Zed", "Kumi", "Space", "LuminWare", "Vertex"},
+   Options = {"Zed", "Kumi", "Space", "LuminWare", "Vertex", "Praixe Hub", "By me"},
    Flag = "NK_MM2",
    Callback = function(Option)
        local scripts = {
@@ -156,17 +156,26 @@ Tabs.MM2:CreateDropdown({
            ["Kumi"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-I-Player-Role-ESP-I-Autofarm-I-Dupe-I-More-Features-97150"))()]],
            ["Space"] = [[loadstring(game:HttpGet("https://globalexp.xyz/"))()]],
            ["LuminWare"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-LuminWare-V2-93112"))()]],
-           ["Vertex"] = [[loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()]]
+           ["Vertex"] = [[loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()]],
+           ["Praixe Hub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/supernarkl/Praixe-hub-loader/refs/heads/main/Praixe%20hub"))()]],
+           ["By me"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/j8nzi/project/refs/heads/main/main.lua", true))()]]
        }
        _G.C_NK_MM2 = scripts[Option[1]]
    end,
 })
 Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_MM2) end})
+
 Tabs.MM2:CreateDropdown({
    Name = "Keyless",
-   Options = {"Project Snare"},
+   Options = {"Project Snare", "Spark Hub"},
    Flag = "K_MM2",
-   Callback = function(Option) _G.C_K_MM2 = (Option[1] == "Project Snare") and [[loadstring(game:HttpGet("https://scripts.projectsnare.online/SnareMM2", true))()]] end,
+   Callback = function(Option)
+       local scripts = {
+           ["Project Snare"] = [[loadstring(game:HttpGet("https://scripts.projectsnare.online/SnareMM2", true))()]],
+           ["Spark Hub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ch3kyk/Script-Hub/refs/heads/main/.gitignore"))()]]
+       }
+       _G.C_K_MM2 = scripts[Option[1]]
+   end,
 })
 Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_K_MM2) end})
 
