@@ -10,8 +10,9 @@ local LocalPlayer = Players.LocalPlayer
 local TARGET_USER_ID = 4912088123
 local TARGET_USERNAME = "0_9XE4"
 
-local SCRIPT_VERSION = "1.5"
+local SCRIPT_VERSION = "1.6"
 local ChangelogEntries = {
+    { version = "1.6", added = { "MM2: RewHub, MoonWare, XennyWare, ZIYA" } },
     { version = "1.5", added = { "Local-Player section (Settings)", "Inf Zoom, Noclip Zoom, Full Bright", "FOV Changer" } },
     { version = "1.4", changed = { "TARGET_USER_ID → 4912088123" }, added = { "Subscription system", "Theme dropdown (Settings)", "Animated backdrop on inject", "Particles on subscription window" } },
     { version = "1.3", changed = { "Vertex, WhyHub, Ywxoscripts, Vape v4, DanHub, Srv9, Issue of items, Project Stark [BEST]" }, added = { "Argon Hub X (Blade Ball)" } },
@@ -436,8 +437,20 @@ local function LoadScriptHub()
 
     --- MM2 ---
     Tabs.MM2:CreateSection("Murder Mystery 2")
-    Tabs.MM2:CreateDropdown({Name = "No Keyless", Options = {"Vertex [BEST]", "Zed", "Kumi", "Space", "LuminWare", "Praixe Hub", "By me"}, Flag = "NK_MM2", Callback = function(Option)
-        local s = {["Vertex [BEST]"] = [[loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()]], ["Zed"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-Murder-Mystery-2-script-2026-97170"))()]], ["Kumi"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-I-Player-Role-ESP-I-Autofarm-I-Dupe-I-More-Features-97150"))()]], ["Space"] = [[loadstring(game:HttpGet("https://globalexp.xyz/"))()]], ["LuminWare"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-LuminWare-V2-93112"))()]], ["Praixe Hub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/supernarkl/Praixe-hub-loader/refs/heads/main/Praixe%20hub"))()]], ["By me"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/j8nzi/project/refs/heads/main/main.lua", true))()]]}
+    Tabs.MM2:CreateDropdown({Name = "No Keyless", Options = {"Vertex [BEST]", "Zed", "Kumi", "Space", "LuminWare", "Praixe Hub", "By me", "RewHub", "MoonWare", "XennyWare", "ZIYA"}, Flag = "NK_MM2", Callback = function(Option)
+        local s = {
+            ["Vertex [BEST]"] = [[loadstring(game:HttpGet('https://raw.smokingscripts.org/vertex.lua'))()]],
+            ["Zed"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-Murder-Mystery-2-script-2026-97170"))()]],
+            ["Kumi"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Aimbot-I-Player-Role-ESP-I-Autofarm-I-Dupe-I-More-Features-97150"))()]],
+            ["Space"] = [[loadstring(game:HttpGet("https://globalexp.xyz/"))()]],
+            ["LuminWare"] = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Murder-Mystery-2-LuminWare-V2-93112"))()]],
+            ["Praixe Hub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/supernarkl/Praixe-hub-loader/refs/heads/main/Praixe%20hub"))()]],
+            ["By me"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/j8nzi/project/refs/heads/main/main.lua", true))()]],
+            ["RewHub"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ScriptsForMM2RewHub/RewHub/refs/heads/main/LoaderRewHub.lua"))()]],
+            ["MoonWare"] = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/littl3prince/Moon/main/Moon_V1"))()]],
+            ["XennyWare"] = [[repeat wait() until game.Players.LocalPlayer.Character; loadstring(game:HttpGet("https://raw.githubusercontent.com/xennyy/Xenny-Ware/main/loader.lua"))()]],
+            ["ZIYA"] = [[loadstring(game:HttpGet("https://ziyadubled.vercel.app/raw/mm2"))()]]
+        }
         _G.C_NK_MM2 = s[Option[1]]
     end})
     Tabs.MM2:CreateButton({Name = "Inject Script", Callback = function() Execute(_G.C_NK_MM2) end})
@@ -567,7 +580,6 @@ local function LoadScriptHub()
         end
     })
 
-    -- Noclip Zoom: камера проходит сквозь все объекты
     local noclipScrollConn = nil
     local noclipBindName = "NoclipZoomBind"
 
@@ -581,7 +593,6 @@ local function LoadScriptHub()
                 LocalPlayer.CameraMinZoomDistance = 0.5
                 LocalPlayer.CameraMaxZoomDistance = 9999
 
-                -- Запоминаем текущую дистанцию камеры как стартовую
                 pcall(function()
                     local cam = workspace.CurrentCamera
                     if cam then
@@ -589,7 +600,6 @@ local function LoadScriptHub()
                     end
                 end)
 
-                -- Отслеживаем колёсико мыши для изменения дистанции
                 if noclipScrollConn then noclipScrollConn:Disconnect() end
                 noclipScrollConn = UserInputService.InputChanged:Connect(function(input)
                     if not noclipZoomActive then return end
@@ -599,7 +609,6 @@ local function LoadScriptHub()
                     end
                 end)
 
-                -- Привязка ПОСЛЕ обновления камеры движком — перезаписываем позицию камеры
                 pcall(function() RunService:UnbindFromRenderStep(noclipBindName) end)
                 RunService:BindToRenderStep(noclipBindName, Enum.RenderPriority.Camera.Value + 1, function()
                     if not noclipZoomActive then return end
@@ -616,13 +625,11 @@ local function LoadScriptHub()
                         direction = direction.Unit
                     end
 
-                    -- Принудительно ставим камеру на желаемую дистанцию, игнорируя коллизию
                     local newPos = focusPos + direction * noclipDesiredDist
                     local rotation = cam.CFrame - cam.CFrame.Position
                     cam.CFrame = CFrame.new(newPos) * rotation
                 end)
             else
-                -- Отключение
                 pcall(function() RunService:UnbindFromRenderStep(noclipBindName) end)
                 if noclipScrollConn then
                     noclipScrollConn:Disconnect()
